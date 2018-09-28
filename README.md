@@ -1,5 +1,5 @@
 # Git Hooks
 
-Force uniform git hook policies.
+Enforce a uniform git hook policy.
 
 ###### EOF

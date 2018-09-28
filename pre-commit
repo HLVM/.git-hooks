@@ -8,10 +8,20 @@
 # To enable this hook, rename this file to "pre-commit".
 
 # if xeno contains downloaded directory, abort committing
-$(dirname $0)/../../xeno/fetch.py -q
-if [ $? -ne 0 ]; then
-	echo "xeno/ contains downloaded directory, should not be committed"
+REPO_DIR=$(dirname $0)/../$(basename `git rev-parse --show-toplevel`)
+
+if [ ! -d $REPO_DIR/../.git-hooks ]; then
+	echo "[Error] You are not at repo root, not allowed to commit"
 	exit 1
+fi
+
+if [ -f $REPO_DIR/xeno/fetch.py ]; then
+	echo "Checking xeno/fetch.py -q..."
+	$REPO_DIR/xeno/fetch.py -q
+	if [ $? -ne 0 ]; then
+		echo "xeno/ contains downloaded directory, should not be committed"
+		exit 1
+	fi
 fi
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
