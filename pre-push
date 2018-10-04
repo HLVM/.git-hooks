@@ -13,10 +13,10 @@ def check(msg):
 for line in sys.stdin:
     local_ref, local_sha1, remote_ref, remote_sha1 = line.strip().split()
     message_to_push = subprocess.check_output(['git', 'show', '--format=%B', '-s', local_sha1])
-    
     if not check(message_to_push):
         print("Aborted. Commit message not in the form of '[...] ...'")
         sys.exit(1)
-    else: # allow to push
-        pushcount.increment()
-        sys.exit(0)
+
+# allow to push
+pushcount.increment()
+sys.exit(0)
