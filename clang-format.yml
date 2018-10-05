@@ -1,6 +1,6 @@
 --- # NOTE this file should be inside repo root directory and named ".clang-format"
 Language: Cpp
-AccessModifierOffset: 0
+AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
@@ -15,9 +15,9 @@ AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: true
 AlwaysBreakTemplateDeclarations: true
-BinPackArguments: true
-BinPackParameters: true
-BraceWrapping:   
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping:
   AfterClass:      false
   AfterControlStatement: false
   AfterEnum:       false
@@ -26,30 +26,35 @@ BraceWrapping:
   AfterObjCDeclaration: false
   AfterStruct:     false
   AfterUnion:      false
-  BeforeCatch:     false
-  BeforeElse:      false
+  BeforeCatch:     true
+  BeforeElse:      true
   IndentBraces:    false
 BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Attach
+BreakBeforeBraces: Custom
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializersBeforeComma: false
-ColumnLimit: 125
+ColumnLimit: 115
 CommentPragmas: '^ IWYU pragma:'
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 0
 ContinuationIndentWidth: 4
-Cpp11BracedListStyle: true
+Cpp11BracedListStyle: false
 DerivePointerAlignment: true
 DisableFormat: false
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: true
-IncludeCategories: 
+IncludeBlocks: Preserve
+IncludeCategories:
   - Regex:           '^".*\.h"'
     Priority:        1
   - Regex:           '^<(gtest|gmock)/.*'
+    Priority:        5
+  - Regex:           '<unistd.h>'
     Priority:        3
+  - Regex:           '^<sys/.*'
+    Priority:        4
   - Regex:           '<[[:alnum:].]+>'
     Priority:        2
+IncludeIsMainRegex: "(-test)?$"
 IndentCaseLabels: false
 IndentWidth: 4
 IndentWrappedFunctionNames: false
@@ -57,15 +62,15 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 MacroBlockBegin: ''
 MacroBlockEnd: ''
 MaxEmptyLinesToKeep: 1
-NamespaceIndentation: None
 ObjCBlockIndentWidth: 4
 ObjCSpaceAfterProperty: false
 ObjCSpaceBeforeProtocolList: false
-PenaltyBreakBeforeFirstCallParameter: 1
+PenaltyBreakAssignment: 50
+PenaltyBreakBeforeFirstCallParameter: 50
 PenaltyBreakComment: 300
 PenaltyBreakFirstLessLess: 120
 PenaltyBreakString: 1000
-PenaltyExcessCharacter: 1000
+PenaltyExcessCharacter: 500
 PenaltyReturnTypeOnItsOwnLine: 200
 PointerAlignment: Right
 ReflowComments: false

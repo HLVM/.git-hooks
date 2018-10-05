@@ -11,7 +11,7 @@ This directory should be under the same directory as all other repositories:
 ```
 
 In each repository:
-```
+```bash
 # set Git hooks as symbolic link
 cd .git && mv hooks hooks_old && ln -s ../../.git-hooks hooks && cd ..
 
@@ -22,19 +22,21 @@ cp ../.git-hooks/clang-format.yml ./.clang-format
 # needed by pre-commit hook
 # get .whitespace-linter (need Python for it to be effective)
 cp ../.git-hooks/whitespace-linter.py ./.whitespace-linter
-chmod +x ./.whitespace-linter # grant execution permission to all user
+# grant execution permission to all user
+chmod +x ./.whitespace-linter
 ```
 
 In the parent directory of all repos:
-```
+```bash
 # get script that checks if format config files are synced with the ones in .git-hooks
-ln -s .git-hooks/check-format-config.sh check-format-config
-chmod +x .git-hooks/check-format-config.sh # grant execution permission to all user
+ln -s .git-hooks/check-format-config.sh check-fmt-cfg
+# grant execution permission to all user
+chmod +x .git-hooks/check-format-config.sh
 ```
 
-To check if format config files in repo `$REPO` is synced with the ones in `.git-hooks`:
-```
-./check-format-config $REPO
+To check if format config files in repo `./ProjName` is synced with the ones in `.git-hooks`:
+```bash
+./check-fmt-cfg ProjName
 ```
 
 ###### EOF
