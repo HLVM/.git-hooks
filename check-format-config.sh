@@ -18,7 +18,7 @@ GIT_HOOKS_DIR="$(dirname $0)/.git-hooks"
 ERROR=0
 
 # (1)
-diff $REPO_DIR/.whitespace-linter $GIT_HOOKS_DIR/whitespace-linter.py > /dev/null
+diff $REPO_DIR/utils/whitespace-linter.py $GIT_HOOKS_DIR/whitespace-linter.py > /dev/null
 DIFF_EXIT=$?
 if [ $DIFF_EXIT -eq 2 ]; then # 0: no difference; 1: difference found; 2: diff error
 	echo "[Error] diff error"
@@ -26,9 +26,9 @@ if [ $DIFF_EXIT -eq 2 ]; then # 0: no difference; 1: difference found; 2: diff e
 elif [ $DIFF_EXIT -eq 1 ]; then
 	ERROR=1
 	echo "[OUTDATED] $REPO_DIR/.whitespace-linter"
-	echo "\trun: cp $GIT_HOOKS_DIR/whitespace-linter.py $REPO_DIR/.whitespace-linter"
+	echo "\trun: cp $GIT_HOOKS_DIR/whitespace-linter.py $REPO_DIR/utils/whitespace-linter.py"
 else
-	echo "[Good] $REPO_DIR/.whitespace-linter"
+	echo "[Good] $REPO_DIR/utils/whitespace-linter.py"
 fi
 
 # (2)

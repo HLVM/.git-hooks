@@ -11,6 +11,8 @@ files = mygitutils.get_staged_modified_in_tracked() # modified files (staged onl
 if len(files) == 0:
     sys.exit(0)
 for path in files:
+    if not os.path.isfile(path):
+        continue # file is deleted rather than created/modified
     if shouldvisit.should_visit(path):
         print("\tvisit %s" % path)
         # -i: modify in-place

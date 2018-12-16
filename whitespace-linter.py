@@ -34,8 +34,8 @@ if os.path.isdir(filename):
     print("[Error] path %s is a directory" % filename)
     sys.exit(1)
 if not os.path.isfile(filename):
-    print("[Error] file %s not found" % filename)
-    sys.exit(1)
+    # file not found, assume it is deleted rather than created or modified
+    sys.exit(0)
 
 num_error, num_line = 0, 0
 with open(filename, 'r') as f: # read-only
@@ -65,7 +65,7 @@ with open(filename, 'r') as f: # read-only
 
 if num_error > 0 and not details:
     print("\t- %d whitespace error%s in file %s" % (num_error, 's' if num_error > 1 else '', filename))
-    print("\t  for details: %s %s -d" % ("./.whitespace-linter", filename))
+    print("\t  for details: %s %s -d" % ("utils/whitespace-linter.py", filename))
     sys.exit(1)
 
 sys.exit(0)

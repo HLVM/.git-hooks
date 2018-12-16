@@ -11,7 +11,7 @@ REPO_DIR = sys.argv[1]
 if not os.path.samefile(REPO_DIR, "."):
     print("[Error] you are not at project root")
     sys.exit(1)
-LINTER_SCRIPT = os.path.join(REPO_DIR, ".whitespace-linter")
+LINTER_SCRIPT = os.path.join(REPO_DIR, "utils/whitespace-linter.py")
 if not os.path.isfile(LINTER_SCRIPT):
     print("[Error] %s not found" % LINTER_SCRIPT)
     sys.exit(1)
