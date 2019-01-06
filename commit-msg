@@ -2,9 +2,11 @@
 
 import sys
 
-allowed_heads = ['design-change', 'digress', 'docs', 'fix',
-                 'housekeeping', 'modify', 'progress', 'refactor', 'release', 'trivial'
-                ]
+allowed_heads = [
+    'design-change', 'digress', 'docs',   'fix',
+    'housekeeping',  'infra',   'modify', 'progress',
+    'refactor',      'release', 'trivial'
+]
 
 err_offense = {
     0: "Offense: format not compliant.",
@@ -13,10 +15,11 @@ err_offense = {
 }
 def err(err_code):
     print("Aborted. Commit message not well-formed. It should be:"             
-        "\n[category] Capitalize 1st character, use verb with simple present tense"
+        "\n[category] Capitalize 1st letter, use verb in simple present tense"
         "\n  category can be:"
-        "\n    'design-change'  'digress'  'docs'     'fix'     'housekeeping'"
-        "\n    'modify'         'progress' 'refactor' 'release' 'trivial'")
+        "\n    'design-change'  'digress'  'docs'     'fix'"
+        "\n    'housekeeping',  'infra'    'modify'   'progress'"
+        "\n    'refactor'       'release'  'trivial'")
     print(err_offense[err_code])
     sys.exit(1)
 

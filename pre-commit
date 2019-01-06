@@ -14,11 +14,21 @@ if [ ! -f $REPO_DIR/LICENSE.txt ]; then
 	echo "$REPO_DIR/LICENSE.txt not found"
 	MANDATORY_FILES_CHECK=1
 fi
+if [ ! -f $REPO_DIR/.gitignore ]; then
+	echo "$REPO_DIR/.gitignore not found"
+	MANDATORY_FILES_CHECK=1
+fi
 if [ $MANDATORY_FILES_CHECK -ne 0 ]; then
 	exit 1
 fi
 
 # python script(s) in addition
+# check module name uniqueless
+echo "Running directory name discipline check..."
+$REPO_DIR/.git/hooks/dir-name-discipline.py $REPO_DIR
+if [ $? -ne 0 ]; then
+	exit 1
+fi
 echo "Running whitespace check..."
 $REPO_DIR/.git/hooks/pre-commit-lint-whitespace.py $REPO_DIR
 if [ $? -ne 0 ]; then
