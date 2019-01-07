@@ -29,6 +29,11 @@ $REPO_DIR/.git/hooks/dir-name-discipline.py $REPO_DIR
 if [ $? -ne 0 ]; then
 	exit 1
 fi
+echo "Running filename vs. head comment matching check..."
+$REPO_DIR/.git/hooks/filename-comment-match.py $REPO_DIR
+if [ $? -ne 0 ]; then
+	exit 1
+fi
 echo "Running whitespace check..."
 $REPO_DIR/.git/hooks/pre-commit-lint-whitespace.py $REPO_DIR
 if [ $? -ne 0 ]; then

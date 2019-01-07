@@ -3,6 +3,15 @@
 
 import os, sys
 
+if len(sys.argv[1:]) != 1:
+    print("[Error] need path to repo as argument")
+    sys.exit(1)
+
+REPO_DIR = sys.argv[1]
+if not os.path.samefile(REPO_DIR, "."):
+    print("[Error] you are not at project root")
+    sys.exit(1)
+
 include_exist = os.path.isdir("include")
 src_exist = os.path.isdir("src")
 unit_tests_exist = os.path.isdir("unit-tests")
