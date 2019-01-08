@@ -18,17 +18,13 @@ GIT_HOOKS_DIR="$(dirname $0)/.git-hooks"
 ERROR=0
 
 # (1)
-diff $REPO_DIR/utils/whitespace-linter.py $GIT_HOOKS_DIR/whitespace-linter.py > /dev/null
-DIFF_EXIT=$?
-if [ $DIFF_EXIT -eq 2 ]; then # 0: no difference; 1: difference found; 2: diff error
-	echo "[Error] diff error"
+if [ ! -f $REPO_DIR/utils/tidy/all.py ]; then
+	echo "[Error] lacks tidiness script"
+	echo "to get around (fake an empty script), run:"
+	echo "  mkdir -p $REPO_DIR/utils/tidy"
+	echo "  touch $REPO_DIR/utils/tidy/all.py"
+	echo "  chmod +x $REPO_DIR/utils/tidy"
 	exit 1
-elif [ $DIFF_EXIT -eq 1 ]; then
-	ERROR=1
-	echo "[OUTDATED] $REPO_DIR/.whitespace-linter"
-	echo "\trun: cp $GIT_HOOKS_DIR/whitespace-linter.py $REPO_DIR/utils/whitespace-linter.py"
-else
-	echo "[Good] $REPO_DIR/utils/whitespace-linter.py"
 fi
 
 # (2)

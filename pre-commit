@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 REPO_DIR=$(dirname $0)/../$(basename `git rev-parse --show-toplevel`)
 
@@ -24,34 +24,27 @@ fi
 
 # python script(s) in addition
 # check module name uniqueless
-echo "Running directory name discipline check..."
-$REPO_DIR/.git/hooks/dir-name-discipline.py $REPO_DIR
-if [ $? -ne 0 ]; then
-	exit 1
-fi
-echo "Running filename vs. head comment matching check..."
-$REPO_DIR/.git/hooks/filename-comment-match.py $REPO_DIR
-if [ $? -ne 0 ]; then
-	exit 1
-fi
-echo "Running whitespace check..."
-$REPO_DIR/.git/hooks/pre-commit-lint-whitespace.py $REPO_DIR
-if [ $? -ne 0 ]; then
-	exit 1
-fi
-which clang-format > /dev/null
-if [ $? -eq 0 ]; then
-	echo "Running clang-format in-place..."
-	$REPO_DIR/.git/hooks/pre-commit-clang-format.py
+if [ -f $REPO_DIR/utils/tidy/all.py ]; then
+	echo "Running tidiness scripts in utils/tidy..."
+	$REPO_DIR/utils/tidy/all.py --silent --with-description
+	if [ $? -ne 0 ]; then
+		echo "pre-commit: commit aborts; nothing committed"
+		exit 1
+	fi
 else
-	echo "Tool clang-format not found; skip running it"
+	echo "$REPO_DIR/utils/tidy/all.py missing, skip"
+	echo "example of tidy/all.py:"
+	echo "  https://github.com/Leedehai/tidy-project"
 fi
+
 # check if xeno/ contains downloaded directory
 if [ -f $REPO_DIR/xeno/fetch.py ]; then
 	echo "Checking xeno/fetch.py -q..."
 	$REPO_DIR/xeno/fetch.py -q
 	if [ $? -ne 0 ]; then
 		echo "xeno/ contains downloaded directory, abort committing"
+		echo "run: $REPO_DIR/xeno/fetch.py -r to clean up"
+		echo "pre-commit: commit aborts; nothing committed"
 		exit 1
 	fi
 fi
