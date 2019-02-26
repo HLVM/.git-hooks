@@ -15,7 +15,14 @@ for line in sys.stdin:
     message_to_push = subprocess.check_output(['git', 'show', '--format=%B', '-s', local_sha1])
     if not check(message_to_push):
         print("Aborted. Commit message not in the form of '[...] ...'")
+        print("         Use 'git rebase --autostash [--autosquash]' to fix")
         sys.exit(1)
+
+out = subprocess.check_output('git log -10 | grep "Author: " | uniq | wc -l', shell=True)
+if out.decode('utf-8').strip() != '1':
+    print("Aborted. Authors in 'git log' contains other names/emails")
+    print("         Use 'git commit --reset-author --amend' to fix")
+    sys.exit(1)
 
 # allow to push
 pushcount.increment()
