@@ -52,7 +52,7 @@ IncludeCategories:
     Priority:        3
   - Regex:           '^<sys/.*'
     Priority:        4
-  - Regex:           '<[[:alnum:].]+>'
+  - Regex:           '<[[:alnum:]._]+>'
     Priority:        2
 IncludeIsMainRegex: "(-test)?$"
 IndentCaseLabels: false

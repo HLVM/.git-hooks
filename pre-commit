@@ -26,7 +26,7 @@ fi
 # check module name uniqueless
 if [ -f $REPO_DIR/utils/tidy/all.py ]; then
 	echo "Running tidiness scripts in utils/tidy..."
-	$REPO_DIR/utils/tidy/all.py --silent --with-description
+	$REPO_DIR/utils/tidy/all.py --silent
 	if [ $? -ne 0 ]; then
 		echo "pre-commit: commit aborts; nothing committed"
 		exit 1
